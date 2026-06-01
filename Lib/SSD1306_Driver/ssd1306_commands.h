@@ -17,7 +17,7 @@
 #define SSD1306_CMD_SET_PAGE_START_ADDR(page) (0xB0 | ((page) & 0x07))
 
 // SSD1306_CMD_SET_CLOCK_DIVIDE_RATIO Value
-#define SSD1306_VAL_CLK_DRATIO_FREQ(divide_ratio, frequency)                   \
+#define SSD1306_VAL_CLK_DRATIO_FREQ(divide_ratio, frequency) \
   ((divide_ratio & 0x0F) | ((frequency & 0x0F) << 4))
 
 #define SSD1306_START_LINE_BASE 0x40
@@ -26,7 +26,8 @@
 #define SSD1306_COLUMN_HIGHER_BASE 0x10
 
 // SSD1306 COMMANDS
-typedef enum {
+typedef enum
+{
   SSD1306_CMD_SET_MEMORY_MODE = 0x20,
   SSD1306_CMD_SET_COLUMN_ADDRESS = 0x21,
   SSD1306_CMD_SET_PAGE_ADDRESS = 0x22,
@@ -52,25 +53,29 @@ typedef enum {
   SSD1306_CMD_SET_CHARGE_PUMP = 0x8D // Init charge pump
 } ssd1306_cmd_t;
 
-typedef enum {
+typedef enum
+{
   SSD1306_SEGMENT_NORMAL = 0xA0,
   SSD1306_SEGMENT_REMAP = 0xA1
 } ssd1306_mapping_t;
 
-typedef enum {
+typedef enum
+{
   SSD1306_COM_SCAN_NORMAL = 0xC0,
   SSD1306_COM_SCAN_REMAPPED = 0xC8
 } ssd1306_com_scan_t;
 
 // SSD1306_CMD_SET_MEMORY_MODE values
-typedef enum {
+typedef enum
+{
   SSD1306_ADDR_MODE_HORIZONTAL = 0x00,
   SSD1306_ADDR_MODE_VERTICAL = 0x01,
   SSD1306_ADDR_MODE_PAGE = 0x02
 } ssd1306_address_mode_t;
 
 // SSD1306_CMD_SET_CHARGE_PUMP values
-typedef enum {
+typedef enum
+{
   SSD1306_CHARGE_PUMP_OFF = 0x10, // Enable charge pump
   SSD1306_CHARGE_PUMP_ON = 0x14   // Enable charge pump
 } ssd1306_charge_pump_mode_t;
