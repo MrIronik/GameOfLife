@@ -12,6 +12,8 @@
 
 #include "string.h"
 
+static display_t oled;
+
 static void ssd1306_i2c_write_cmd(ssd1306_i2c_driver_t *self, uint8_t cmd)
 {
     I2C_HandleTypeDef *hi2c = (I2C_HandleTypeDef *) self->i2c_handle;
@@ -45,7 +47,24 @@ display_t DISPLAY_Configure(void) {
     .driver.i2c_write_cmd = ssd1306_i2c_write_cmd,
     .driver.i2c_write_data = ssd1306_i2c_write_data};
 
+    memset(display_template.screen, 0, sizeof(display_template.screen));
     memset(display_template.driver.frame_buffer, 0, sizeof(display_template.driver.frame_buffer));
 
     return display_template;
+}
+
+void DISPLAY_Init(void)
+{
+    oled = DISPLAY_Configure();
+}
+
+void DISPLAY_Write(void)
+{
+
+}
+
+void DISPLAY_Update(void)
+{
+    // memcpy
+    memc
 }
