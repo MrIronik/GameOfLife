@@ -13,6 +13,8 @@
 
 #include "string.h"
 
+#include <math.h>
+
 static ssd1306_config_clock_error_t SSD1306_Configure_Clock(ssd1306_i2c_driver_t *driver,
                                                             uint8_t clock_config);
 static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_i2c_driver_t *driver);
