@@ -98,8 +98,15 @@ int main(void)
 
   SSD1306_BasicInit(&display_test.driver);
 
-  // SSD1306_Draw_Pixel(&display_test.driver, 32, 64);
-  // SSD1306_Write_Display(&display_test.driver);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 0);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 10);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 20);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 30);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 40);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 50);
+  SSD1306_Draw_Pixel(&display_test.driver, 10, 60);
+
+  SSD1306_Write_Display(&display_test.driver);
   /* USER CODE END 2 */
 
   /* Infinite loop */

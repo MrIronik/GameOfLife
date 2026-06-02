@@ -25,6 +25,13 @@
 #define SSD1306_COLUMN_LOWER_BASE 0x00
 #define SSD1306_COLUMN_HIGHER_BASE 0x10
 
+#define SSD1306_DISPLAY_DISABLE 0
+#define SSD1306_DISPLAY_ENABLE 1
+
+#define SSD1306_INVERSE_DISABLE 0
+#define SSD1306_INVERSE_ENABLE 1
+
+
 // SSD1306 COMMANDS
 typedef enum
 {
@@ -32,8 +39,8 @@ typedef enum
   SSD1306_CMD_SET_COLUMN_ADDRESS = 0x21,
   SSD1306_CMD_SET_PAGE_ADDRESS = 0x22,
   SSD1306_CMD_SET_CONTRAST = 0x81,           // Value 0-255
-  SSD1306_CMD_ENTIRE_ON = 0xA5,              // Entire screen printed
-  SSD1306_CMD_ENTIRE_OFF = 0xA4,             // Entire screen cleared
+  SSD1306_CMD_ENTIRE_ON = 0xA5,              // Entire screen printed, usually for test purpuse
+  SSD1306_CMD_SHOW_RAM = 0xA4,               // Entire screen cleared
   SSD1306_CMD_NORMAL_DISPLAY = 0xA6,         // Normal colors
   SSD1306_CMD_INVERSE_DISPLAY = 0xA7,        // Negative colors
   SSD1306_CMD_SET_MULTIPLEX = 0xA8,          // Value 16-63
@@ -68,10 +75,10 @@ typedef enum
 // SSD1306_CMD_SET_MEMORY_MODE values
 typedef enum
 {
-  SSD1306_ADDR_MODE_HORIZONTAL = 0x00,
-  SSD1306_ADDR_MODE_VERTICAL = 0x01,
-  SSD1306_ADDR_MODE_PAGE = 0x02
-} ssd1306_address_mode_t;
+  SSD1306_MEM_MODE_HORIZONTAL = 0x00,
+  SSD1306_MEM_MODE_VERTICAL = 0x01,
+  SSD1306_MEM_MODE_PAGE = 0x02
+} ssd1306_memory_mode_t;
 
 // SSD1306_CMD_SET_CHARGE_PUMP values
 typedef enum
