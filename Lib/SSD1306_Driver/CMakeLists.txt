@@ -8,11 +8,10 @@ set(SSD1306_DRIVER_HEADERS
 )
 
 add_library(SSD1306_DRIVER 
-    STATIC
         ${SSD1306_DRIVER_SOURCES}
 )
 
 target_include_directories(SSD1306_DRIVER
     PUBLIC
-        $(CMAKE_CURRENT_SOURCE_DIR)
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )

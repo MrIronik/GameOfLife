@@ -42,6 +42,7 @@ add_subdirectory(cmake/stm32cubemx)
 
 # Add libraries
 add_subdirectory(Lib/SSD1306_Driver)
+add_subdirectory(App)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
