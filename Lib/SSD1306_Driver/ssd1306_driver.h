@@ -24,22 +24,6 @@
 
 #define SSD1306_PAGE_SIZE 8
 
-
-
-
-
-typedef struct
-{
-  ssd1306_cmd_t cmd;
-  uint8_t val;
-} ssd1306_configuration_t;
-
-typedef struct 
-{
-  ssd1306_configuration_t c;
-} ssd1306_config_t;
-
-
 /* Error Handle enums */
 
 typedef enum
@@ -129,7 +113,7 @@ typedef struct ssd1306_driver
   void (*i2c_write_data)(struct ssd1306_driver *self, const uint8_t *data, size_t len);
 } ssd1306_driver_t;
 
-ssd1306_error_t SSD1306_Init(ssd1306_config_t *config);
+// ssd1306_error_t SSD1306_Init(ssd1306_config_t *config);
 ssd1306_error_t SSD1306_BasicInit(ssd1306_driver_t *driver);
 void SSD1306_Display_OnOff(ssd1306_driver_t *driver, uint8_t state);
 

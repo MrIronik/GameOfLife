@@ -36,13 +36,13 @@ static ssd1306_config_voltage_error_t SSD1306_Config_Voltage(ssd1306_driver_t *d
 static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_driver_t *driver,
                                                              uint8_t mode);
 
-ssd1306_error_t SSD1306_Init(confi)
+// ssd1306_error_t SSD1306_Init(confi)
 
 ssd1306_error_t SSD1306_BasicInit(ssd1306_driver_t *driver)
 {
   SSD1306_Display_OnOff(driver, SSD1306_DISPLAY_DISABLE);
 
-  SSD1306_Configure_Clock(driver, SSD1306_VAL_CLK_DRATIO_FREQ(0x0, 0xF));
+  SSD1306_Configure_Clock(driver, SSD1306_VAL_CLK_DRATIO_FREQ(0xF, 0x0));
 
   SSD1306_Configure_Multiplex(driver);
 
@@ -303,9 +303,9 @@ static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_driver_t *d
 {
   // TODO: Refactor it ugly thing
   //   driver->i2c_write_cmd(driver, 0xA6); // normal display
-  uint8_t cmd = (uint8_t)SSD1306_CMD_NORMAL_DISPLAY;
+  uint8_t cmd = (uint8_t)SSD1306_SET_NORMAL_DISPLAY;
 
-  if (mode == SSD1306_INVERSE_ENABLE) cmd = (uint8_t)SSD1306_CMD_INVERSE_DISPLAY;
+  if (mode == SSD1306_INVERSE_ENABLE) cmd = (uint8_t)SSD1306_SET_INVERSE_DISPLAY;
 
   driver->i2c_write_cmd(driver, cmd);
 
