@@ -31,7 +31,6 @@
 #define SSD1306_INVERSE_DISABLE 0
 #define SSD1306_INVERSE_ENABLE 1
 
-
 // SSD1306 COMMANDS
 typedef enum
 {

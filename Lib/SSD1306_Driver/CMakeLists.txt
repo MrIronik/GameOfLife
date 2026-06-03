@@ -8,7 +8,7 @@ set(SSD1306_DRIVER_HEADERS
 )
 
 add_library(SSD1306_DRIVER 
-        ${SSD1306_DRIVER_SOURCES}
+    ${SSD1306_DRIVER_SOURCES}
 )
 
 target_include_directories(SSD1306_DRIVER

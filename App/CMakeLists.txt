@@ -1,5 +1,5 @@
 set(DISPLAY_SOURCES
-    Display/display.c
+    Display/oled.c
 )
 set(DISPLAY_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/Display

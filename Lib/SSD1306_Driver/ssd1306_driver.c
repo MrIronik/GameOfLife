@@ -15,28 +15,30 @@
 
 #include <math.h>
 
-static ssd1306_config_clock_error_t SSD1306_Configure_Clock(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_clock_error_t SSD1306_Configure_Clock(ssd1306_driver_t *driver,
                                                             uint8_t clock_config);
-static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_i2c_driver_t *driver);
-static ssd1306_config_offset_error_t SSD1306_Configure_Offset(ssd1306_i2c_driver_t *driver, uint8_t offset);
-static ssd1306_config_chargepump_error_t SSD1306_Configure_ChargePump(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_driver_t *driver);
+static ssd1306_config_offset_error_t SSD1306_Configure_Offset(ssd1306_driver_t *driver, uint8_t offset);
+static ssd1306_config_chargepump_error_t SSD1306_Configure_ChargePump(ssd1306_driver_t *driver,
                                                                       ssd1306_charge_pump_mode_t mode);
-static ssd1306_config_mem_mode_error_t SSD1306_Configure_MemoryMode(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_mem_mode_error_t SSD1306_Configure_MemoryMode(ssd1306_driver_t *driver,
                                                                     ssd1306_memory_mode_t mode);
-static ssd1306_config_mapping_error_t SSD1306_Config_Mapping(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_mapping_error_t SSD1306_Config_Mapping(ssd1306_driver_t *driver,
                                                              ssd1306_mapping_t mode);
-static ssd1306_config_com_scan_error_t SSD1306_Config_ComScanDec(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_com_scan_error_t SSD1306_Config_ComScanDec(ssd1306_driver_t *driver,
                                                                  ssd1306_com_scan_t mode);
-static ssd1306_config_com_pins_error_t SSD1306_Config_ComPins(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_com_pins_error_t SSD1306_Config_ComPins(ssd1306_driver_t *driver,
                                                               uint8_t pins);
-static ssd1306_config_contrast_error_t SSD1306_Config_Contrast(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_contrast_error_t SSD1306_Config_Contrast(ssd1306_driver_t *driver,
                                                                uint8_t contrast);
-static ssd1306_config_precharge_error_t SSD1306_Config_Precharge(ssd1306_i2c_driver_t *driver);
-static ssd1306_config_voltage_error_t SSD1306_Config_Voltage(ssd1306_i2c_driver_t *driver);
-static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_precharge_error_t SSD1306_Config_Precharge(ssd1306_driver_t *driver);
+static ssd1306_config_voltage_error_t SSD1306_Config_Voltage(ssd1306_driver_t *driver);
+static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_driver_t *driver,
                                                              uint8_t mode);
 
-ssd1306_error_t SSD1306_BasicInit(ssd1306_i2c_driver_t *driver)
+ssd1306_error_t SSD1306_Init(confi)
+
+ssd1306_error_t SSD1306_BasicInit(ssd1306_driver_t *driver)
 {
   SSD1306_Display_OnOff(driver, SSD1306_DISPLAY_DISABLE);
 
@@ -75,7 +77,7 @@ ssd1306_error_t SSD1306_BasicInit(ssd1306_i2c_driver_t *driver)
   return SSD1306_INIT_OK;
 }
 
-void SSD1306_Draw_Pixel(ssd1306_i2c_driver_t *driver, uint8_t xpos, uint8_t ypos)
+void SSD1306_Draw_Pixel(ssd1306_driver_t *driver, uint8_t xpos, uint8_t ypos)
 {
   if (xpos >= SSD1306_SCREEN_WIDTH)
     return; // TODO: Add Error Handle
@@ -88,7 +90,7 @@ void SSD1306_Draw_Pixel(ssd1306_i2c_driver_t *driver, uint8_t xpos, uint8_t ypos
   driver->frame_buffer[page_number][xpos] |= bit_y;
 }
 
-void SSD1306_Write_Display(ssd1306_i2c_driver_t *driver)
+void SSD1306_Write_Display(ssd1306_driver_t *driver)
 {
   // TODO: Make this normal lol struct with config etc
   // uint8_t cmd[3];
@@ -106,12 +108,12 @@ void SSD1306_Write_Display(ssd1306_i2c_driver_t *driver)
                          sizeof(driver->frame_buffer));
 }
 
-void SSD1306_Write_Page(ssd1306_i2c_driver_t *driver)
+void SSD1306_Write_Page(ssd1306_driver_t *driver)
 {
   // TODO: Implement this
 }
 
-void SSD1306_Clear_Display(ssd1306_i2c_driver_t *driver)
+void SSD1306_Clear_Display(ssd1306_driver_t *driver)
 {
   memset(driver->frame_buffer, 0, sizeof(driver->frame_buffer));
 
@@ -123,7 +125,7 @@ void SSD1306_Clear_Display(ssd1306_i2c_driver_t *driver)
  *
  * @param clock_config value, should be passed for SSD1306_VAL_CLK_DRATIO_FREQ macro
  */
-static ssd1306_config_clock_error_t SSD1306_Configure_Clock(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_clock_error_t SSD1306_Configure_Clock(ssd1306_driver_t *driver,
                                                             uint8_t clock_config)
 {
   uint8_t cmd[2];
@@ -139,7 +141,7 @@ static ssd1306_config_clock_error_t SSD1306_Configure_Clock(ssd1306_i2c_driver_t
   return SSD1306_CLOCK_OK;
 }
 
-static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_i2c_driver_t *driver)
+static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_driver_t *driver)
 {
   uint8_t cmd[2];
 
@@ -154,7 +156,7 @@ static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_i2
   return SSD1306_MULTIPLEXER_OK;
 }
 
-static ssd1306_config_offset_error_t SSD1306_Configure_Offset(ssd1306_i2c_driver_t *driver, uint8_t offset)
+static ssd1306_config_offset_error_t SSD1306_Configure_Offset(ssd1306_driver_t *driver, uint8_t offset)
 {
   if (offset > 254)
     return SSD1306_OFFSET_FAIL; // Set correct max value
@@ -174,7 +176,7 @@ static ssd1306_config_offset_error_t SSD1306_Configure_Offset(ssd1306_i2c_driver
 
 //   TODO: Make driver set start page addr func driver->i2c_write_cmd(driver, 0x40); // start line = 0
 
-static ssd1306_config_chargepump_error_t SSD1306_Configure_ChargePump(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_chargepump_error_t SSD1306_Configure_ChargePump(ssd1306_driver_t *driver,
                                                                       ssd1306_charge_pump_mode_t mode)
 {
   uint8_t cmd[2];
@@ -190,7 +192,7 @@ static ssd1306_config_chargepump_error_t SSD1306_Configure_ChargePump(ssd1306_i2
   return SSD1306_CHARGEPUMP_OK;
 }
 
-static ssd1306_config_mem_mode_error_t SSD1306_Configure_MemoryMode(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_mem_mode_error_t SSD1306_Configure_MemoryMode(ssd1306_driver_t *driver,
                                                                     ssd1306_memory_mode_t mode)
 {
   uint8_t cmd[2];
@@ -206,7 +208,7 @@ static ssd1306_config_mem_mode_error_t SSD1306_Configure_MemoryMode(ssd1306_i2c_
   return SSD1306_MEMORYMODE_OK;
 }
 
-static ssd1306_config_mapping_error_t SSD1306_Config_Mapping(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_mapping_error_t SSD1306_Config_Mapping(ssd1306_driver_t *driver,
                                                              ssd1306_mapping_t mode)
 {
   //   driver->i2c_write_cmd(driver, 0xA1); // segment remap
@@ -216,7 +218,7 @@ static ssd1306_config_mapping_error_t SSD1306_Config_Mapping(ssd1306_i2c_driver_
   return SSD1306_MAPPING_OK;
 }
 
-static ssd1306_config_com_scan_error_t SSD1306_Config_ComScanDec(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_com_scan_error_t SSD1306_Config_ComScanDec(ssd1306_driver_t *driver,
                                                                  ssd1306_com_scan_t mode)
 {
   uint8_t cmd = (uint8_t)mode;
@@ -225,7 +227,7 @@ static ssd1306_config_com_scan_error_t SSD1306_Config_ComScanDec(ssd1306_i2c_dri
   return SSD1306_COM_SCAN_OK;
 }
 
-static ssd1306_config_com_pins_error_t SSD1306_Config_ComPins(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_com_pins_error_t SSD1306_Config_ComPins(ssd1306_driver_t *driver,
                                                               uint8_t pins)
 {
   if (pins > 254)
@@ -244,7 +246,7 @@ static ssd1306_config_com_pins_error_t SSD1306_Config_ComPins(ssd1306_i2c_driver
   return SSD1306_COM_PINS_OK;
 }
 
-static ssd1306_config_contrast_error_t SSD1306_Config_Contrast(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_contrast_error_t SSD1306_Config_Contrast(ssd1306_driver_t *driver,
                                                                uint8_t contrast)
 {
   uint8_t cmd[2];
@@ -260,7 +262,7 @@ static ssd1306_config_contrast_error_t SSD1306_Config_Contrast(ssd1306_i2c_drive
   return SSD1306_CONTRAST_OK;
 }
 
-static ssd1306_config_precharge_error_t SSD1306_Config_Precharge(ssd1306_i2c_driver_t *driver)
+static ssd1306_config_precharge_error_t SSD1306_Config_Precharge(ssd1306_driver_t *driver)
 {
   //   driver->i2c_write_cmd(driver, 0xD9); // precharge
   //   driver->i2c_write_cmd(driver, 0xF1);
@@ -278,7 +280,7 @@ static ssd1306_config_precharge_error_t SSD1306_Config_Precharge(ssd1306_i2c_dri
   return SSD1306_PRECHARGE_OK;
 }
 
-static ssd1306_config_voltage_error_t SSD1306_Config_Voltage(ssd1306_i2c_driver_t *driver)
+static ssd1306_config_voltage_error_t SSD1306_Config_Voltage(ssd1306_driver_t *driver)
 {
   //   driver->i2c_write_cmd(driver, 0xDB); // VCOMH
   //   driver->i2c_write_cmd(driver, 0x40);
@@ -296,7 +298,7 @@ static ssd1306_config_voltage_error_t SSD1306_Config_Voltage(ssd1306_i2c_driver_
   return SSD1306_VOLTAGE_OK;
 }
 
-static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_i2c_driver_t *driver,
+static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_driver_t *driver,
                                                              uint8_t mode)
 {
   // TODO: Refactor it ugly thing
@@ -311,7 +313,7 @@ static ssd1306_config_inverse_error_t SSD1306_Config_Inverse(ssd1306_i2c_driver_
 }
 //   driver->i2c_write_cmd(driver, 0xA4); // resume RAM
 
-void SSD1306_Display_OnOff(ssd1306_i2c_driver_t *driver, uint8_t state)
+void SSD1306_Display_OnOff(ssd1306_driver_t *driver, uint8_t state)
 {  
   // TODO: Refactor it ugly thing
   //   driver->i2c_write_cmd(driver, 0xAF); // display ON

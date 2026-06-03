@@ -14,6 +14,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "ssd1306_commands.h"
+
 /* Importent SSD1306 settings */
 #define SSD1306_SCREEN_HIGHT 64
 #define SSD1306_SCREEN_WIDTH 128
@@ -21,6 +23,22 @@
 #define SSD1306_I2C_ADDRESS 0x78
 
 #define SSD1306_PAGE_SIZE 8
+
+
+
+
+
+typedef struct
+{
+  ssd1306_cmd_t cmd;
+  uint8_t val;
+} ssd1306_configuration_t;
+
+typedef struct 
+{
+  ssd1306_configuration_t c;
+} ssd1306_config_t;
+
 
 /* Error Handle enums */
 
@@ -102,20 +120,21 @@ typedef enum
   SSD1306_INVERSE_FAIL
 } ssd1306_config_inverse_error_t;
 
-typedef struct ssd1306_i2c_driver
+typedef struct ssd1306_driver
 {
-  void *i2c_handle;
-  uint16_t i2c_addr;
+  void *protocol_handle; // Should bd pointer to i2c or spi handle
+  uint16_t i2c_addr;     // Leave 0 if using SPI
   uint8_t frame_buffer[SSD1306_PAGE_SIZE][SSD1306_SCREEN_WIDTH];
-  void (*i2c_write_cmd)(struct ssd1306_i2c_driver *self, uint8_t cmd);
-  void (*i2c_write_data)(struct ssd1306_i2c_driver *self, const uint8_t *data, size_t len);
-} ssd1306_i2c_driver_t;
+  void (*i2c_write_cmd)(struct ssd1306_driver *self, uint8_t cmd);
+  void (*i2c_write_data)(struct ssd1306_driver *self, const uint8_t *data, size_t len);
+} ssd1306_driver_t;
 
-ssd1306_error_t SSD1306_BasicInit(ssd1306_i2c_driver_t *driver);
-void SSD1306_Display_OnOff(ssd1306_i2c_driver_t *driver, uint8_t state);
+ssd1306_error_t SSD1306_Init(ssd1306_config_t *config);
+ssd1306_error_t SSD1306_BasicInit(ssd1306_driver_t *driver);
+void SSD1306_Display_OnOff(ssd1306_driver_t *driver, uint8_t state);
 
-void SSD1306_Draw_Pixel(ssd1306_i2c_driver_t *driver, uint8_t xpos, uint8_t ypos);
-void SSD1306_Write_Display(ssd1306_i2c_driver_t *driver);
-void SSD1306_Clear_Display(ssd1306_i2c_driver_t *driver);
+void SSD1306_Draw_Pixel(ssd1306_driver_t *driver, uint8_t xpos, uint8_t ypos);
+void SSD1306_Write_Display(ssd1306_driver_t *driver);
+void SSD1306_Clear_Display(ssd1306_driver_t *driver);
 
 #endif /* SSD1306_DRIVER_H_ */

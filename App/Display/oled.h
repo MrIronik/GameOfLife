@@ -9,10 +9,10 @@
 typedef struct
 {
     uint8_t screen[SSD1306_PAGE_SIZE][SSD1306_SCREEN_WIDTH];
-    ssd1306_i2c_driver_t driver;
+    ssd1306_driver_t driver;
 } display_t;
 
 void DISPLAY_Init(void);
-void DISPLAY_GameOfLife_Title(bool q);
+void DISPLAY_GameOfLife_Title(bool *q);
 
 #endif /* OLED_H_ */
