@@ -13,6 +13,10 @@ typedef struct
 } display_t;
 
 void DISPLAY_Init(void);
-void DISPLAY_GameOfLife_Title(bool *q);
+void DISPLAY_TitleScreen(void);
+
+void DISPLAY_Write(uint8_t *screen);
+void DISPLAY_Clear(void);
+void DISPLAY_Update(void);
 
 #endif /* OLED_H_ */

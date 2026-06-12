@@ -64,8 +64,14 @@ void DISPLAY_Init(void)
     SSD1306_BasicInit(&oled.driver);
 }
 
-void DISPLAY_Write(void)
+void DISPLAY_Write(uint8_t *screen)
 {
+    memcpy(oled.screen, screen, sizeof(oled.screen));
+}
+
+void DISPLAY_Clear(void)
+{
+    SSD1306_Clear_Display(&oled.driver);
 }
 
 void DISPLAY_Update(void)
@@ -75,14 +81,22 @@ void DISPLAY_Update(void)
     SSD1306_Write_Display(&oled.driver);
 }
 
+/* Title Screen Draw Functions */
+// TODO: Add GFX
+
 static const font_char_t *FONT_Get(char c)
 {
-    for (uint32_t i = 0; i < sizeof(font) / sizeof(font[0]); i++)
+    static const uint32_t font_size = sizeof(font) / sizeof(font[0]);
+
+    for (uint32_t i = 0; i < font_size; i++)
     {
         if (font[i].c == c)
+        {
             return &font[i];
+        }
     }
-    return 0;
+
+    return 0; // znak nieobsługiwany
 }
 
 static void DISPLAY_DrawChar(ssd1306_driver_t *d,
@@ -98,7 +112,8 @@ static void DISPLAY_DrawChar(ssd1306_driver_t *d,
     {
         for (uint8_t col = 0; col < FONT_WIDTH; col++)
         {
-            if (ch->data[row] & (1 << (4 - col)))
+            // FIX: MSB -> LSB mapping
+            if (ch->data[row] & (1 << (FONT_WIDTH - 1 - col)))
             {
                 SSD1306_Draw_Pixel(d, x + col, y + row);
             }
@@ -106,111 +121,38 @@ static void DISPLAY_DrawChar(ssd1306_driver_t *d,
     }
 }
 
-// void DISPLAY_Draw_GameOfLife_Title(void)
-// {
-//     SSD1306_Clear_Display(&oled.driver);
-
-//     const char *text = "GAME OF LIFE";
-
-//     uint8_t x = 10;
-//     uint8_t y = 10;
-
-//     for (uint8_t i = 0; text[i] != '\0'; i++)
-//     {
-//         if (text[i] == ' ')
-//         {
-//             x += FONT_WIDTH; // spacing
-//             continue;
-//         }
-
-//         DISPLAY_DrawChar(&oled.driver, text[i], x, y);
-//         x += FONT_WIDTH + 1;
-//     }
-
-//     SSD1306_Write_Display(&oled.driver);
-// }
-
-static uint8_t DISPLAY_TextWidth(const char *text)
+void DISPLAY_TitleScreen(void)
 {
-    uint8_t width = 0;
+    const char *title = "GAME OF LIFE";
+    // const char *subtitle = "PRESS BUTTON TO START";
 
-    for (uint8_t i = 0; text[i] != '\0'; i++)
+    // -------------------------
+    // TITLE
+    // -------------------------
+    uint8_t x = 10;
+    uint8_t y = 20;
+
+    for (uint8_t i = 0; title[i] != '\0'; i++)
     {
-        if (text[i] == ' ')
-            width += FONT_WIDTH; // space
-        else
-            width += FONT_WIDTH + 1; // char + spacing
+        if (title[i] != ' ')
+            DISPLAY_DrawChar(&oled.driver, title[i], x, y);
+
+        x += FONT_WIDTH + 1;
     }
 
-    if (width > 0)
-        width -= 1; // usuń ostatni spacing
+    // -------------------------
+    // SUBTITLE
+    // -------------------------
+    x = 0;
+    y = 40;
 
-    return width;
-}
+    // for (uint8_t i = 0; subtitle[i] != '\0'; i++)
+    // {
+    //     if (subtitle[i] != ' ')
+    //         DISPLAY_DrawChar(&oled.driver, subtitle[i], x, y);
 
-static void DISPLAY_Draw_GameOfLife_Title(uint16_t frame)
-{
-    SSD1306_Clear_Display(&oled.driver);
-
-    const char *text = "GAME OF LIFE";
-
-    uint8_t text_width = DISPLAY_TextWidth(text);
-
-    uint8_t base_x = (SSD1306_SCREEN_WIDTH - text_width) / 2;
-    uint8_t base_y = (SSD1306_SCREEN_HIGHT - FONT_HEIGHT) / 2;
-
-    for (uint8_t i = 0; text[i] != '\0'; i++)
-    {
-        if (text[i] == ' ')
-        {
-            base_x += FONT_WIDTH;
-            continue;
-        }
-
-        // -------------------------
-        // 🌊 WAVE EFFECT (sin-like without float)
-        // -------------------------
-        int8_t wave = 0;
-        {
-            uint8_t t = frame + i * 6;
-
-            // pseudo-sine using lookup trick
-            static const int8_t sin_lut[16] =
-                {0, 1, 2, 1, 0, -1, -2, -1, 0, 1, 2, 1, 0, -1, -2, -1};
-
-            wave = sin_lut[t & 0x0F];
-        }
-
-        // -------------------------
-        // ✨ FADE-IN EFFECT
-        // -------------------------
-        uint8_t appear_delay = i * 3;
-        if (frame < appear_delay)
-        {
-            continue; // jeszcze się nie pojawił
-        }
-
-        uint8_t x = base_x;
-        uint8_t y = base_y + wave;
-
-        DISPLAY_DrawChar(&oled.driver, text[i], x, y);
-
-        base_x += FONT_WIDTH + 1;
-    }
+    //     x += FONT_WIDTH + 1;
+    // }
 
     SSD1306_Write_Display(&oled.driver);
-}
-
-void DISPLAY_GameOfLife_Title(bool *q)
-{
-    do {
-        for (uint16_t f = 0; f < 200; f++) {
-
-            DISPLAY_Draw_GameOfLife_Title(f);
-
-            HAL_Delay(30);
-        }
-    } while (*q);
-
-    SSD1306_Clear_Display(&oled.driver);
 }
