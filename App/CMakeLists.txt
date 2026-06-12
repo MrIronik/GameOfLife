@@ -5,10 +5,30 @@ set(DISPLAY_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/Display
 )
 
+set(LOGIC_SOURCES
+    Logic/logic.c
+)
+
+set(LOGIC_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/Logic
+)
+
+set(GAME_OF_LIFE_SOURCES
+    GameOfLife/gameoflife.c
+)
+
+set(GAME_OF_LIFE_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/GameOfLife
+)
+
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${DISPLAY_SOURCES}
+    ${LOGIC_SOURCES}
+    ${GAME_OF_LIFE_SOURCES}
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${DISPLAY_HEADERS}
+    ${LOGIC_HEADERS}
+    ${GAME_OF_LIFE_HEADERS}
 )
