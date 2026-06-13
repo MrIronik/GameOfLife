@@ -5,8 +5,6 @@
 
 #include <stm32f4xx_hal.h>
 
-// TODO: Get rid of magic numbers
-
 static uint8_t board[BOARD_HIGHT][BOARD_WIDTH];
 static uint8_t screen_board[8][BOARD_WIDTH];
 
@@ -51,10 +49,6 @@ uint8_t *LOGIC_GetBoardScreen(void)
     LOGIC_ParseBoardToScreen();
     return (uint8_t *)screen_board;
 }
-
-//  ###
-//  #*#
-//  ###
 
 static uint8_t LOGIC_IsCellAlive(uint8_t y, uint8_t x)
 {

@@ -18,7 +18,7 @@
 
 static display_t oled;
 
-static void ssd1306_i2c_write_cmd(ssd1306_driver_t *self, uint8_t cmd)
+static void ssd1306_write_cmd(ssd1306_driver_t *self, uint8_t cmd)
 {
     I2C_HandleTypeDef *hi2c = (I2C_HandleTypeDef *)self->protocol_handle;
 
@@ -30,7 +30,7 @@ static void ssd1306_i2c_write_cmd(ssd1306_driver_t *self, uint8_t cmd)
     HAL_I2C_Master_Transmit(hi2c, self->i2c_addr, cmd_buffer, 2, HAL_MAX_DELAY);
 }
 
-static void ssd1306_i2c_write_data(ssd1306_driver_t *self, const uint8_t *data, size_t len)
+static void ssd1306_write_data(ssd1306_driver_t *self, const uint8_t *data, size_t len)
 {
     I2C_HandleTypeDef *hi2c = (I2C_HandleTypeDef *)self->protocol_handle;
 
@@ -49,8 +49,8 @@ display_t DISPLAY_Configure(void)
     display_t display_template = {
         .driver.protocol_handle = &hi2c1,
         .driver.i2c_addr = (uint16_t)SSD1306_I2C_ADDRESS,
-        .driver.i2c_write_cmd = ssd1306_i2c_write_cmd,
-        .driver.i2c_write_data = ssd1306_i2c_write_data};
+        .driver.write_cmd = ssd1306_write_cmd,
+        .driver.write_data = ssd1306_write_data};
 
     memset(display_template.screen, 0, sizeof(display_template.screen));
     memset(display_template.driver.frame_buffer, 0, sizeof(display_template.driver.frame_buffer));

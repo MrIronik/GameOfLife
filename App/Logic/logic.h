@@ -15,7 +15,7 @@
 #define SURVIVE_NEIGHBORS 2
 #define BIRTH_NEIGHBORS 3
 
-#define START_GAME_CELLS    30
+#define START_GAME_CELLS    20
 
 void LOGIC_Init(void);
 void LOGIC_BoardScan(void);

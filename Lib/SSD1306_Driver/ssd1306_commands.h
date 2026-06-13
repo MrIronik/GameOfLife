@@ -37,20 +37,18 @@ typedef enum
   SSD1306_CMD_SET_MEMORY_MODE = 0x20,
   SSD1306_CMD_SET_COLUMN_ADDRESS = 0x21,
   SSD1306_CMD_SET_PAGE_ADDRESS = 0x22,
-  SSD1306_CMD_SET_CONTRAST = 0x81,           // Value 0-255
-  SSD1306_CMD_ENTIRE_ON = 0xA5,              // Entire screen printed, usually for test purpuse
-  SSD1306_CMD_SHOW_RAM = 0xA4,               // Entire screen cleared
-  
-  SSD1306_CMD_SET_MULTIPLEX = 0xA8,          // Value 16-63
+  SSD1306_CMD_SET_CONTRAST = 0x81, // Value 0-255
+  SSD1306_CMD_ENTIRE_ON = 0xA5,    // Entire screen printed, usually for test purpuse
+  SSD1306_CMD_SHOW_RAM = 0xA4,     // Entire screen cleared
 
-  SSD1306_CMD_DISPLAY_OFF = 0xAE,            // Sleep
-  SSD1306_CMD_DISPLAY_ON = 0xAF,             // Normal mode
-  
-  SSD1306_CMD_SET_DISPLAY_OFFSET = 0xD3,     // Check Table 10-1 in DOCs
+  SSD1306_CMD_SET_MULTIPLEX = 0xA8, // Value 16-63
 
+  SSD1306_CMD_DISPLAY_OFF = 0xAE, // Sleep
+  SSD1306_CMD_DISPLAY_ON = 0xAF,  // Normal mode
+
+  SSD1306_CMD_SET_DISPLAY_OFFSET = 0xD3, // Check Table 10-1 in DOCs
 
   SSD1306_CMD_SET_CLOCK_DIVIDE_RATIO = 0xD5, // Could help with refreshing bugs
-
 
   SSD1306_CMD_SET_PRECHARGE_PERIOD = 0xD9,
   SSD1306_CMD_SET_CON_PIN_HW_CONF = 0xDA, // Check Table 10-3 in DOCs
@@ -66,8 +64,8 @@ typedef enum
 
 typedef enum
 {
-  SSD1306_SET_NORMAL_DISPLAY = 0xA6,         // Normal colors
-  SSD1306_SET_INVERSE_DISPLAY = 0xA7,        // Negative colors
+  SSD1306_SET_NORMAL_DISPLAY = 0xA6,  // Normal colors
+  SSD1306_SET_INVERSE_DISPLAY = 0xA7, // Negative colors
 } ssd1306_inverse_disp_t;
 
 typedef enum

@@ -109,8 +109,8 @@ typedef struct ssd1306_driver
   void *protocol_handle; // Should bd pointer to i2c or spi handle
   uint16_t i2c_addr;     // Leave 0 if using SPI
   uint8_t frame_buffer[SSD1306_PAGE_SIZE][SSD1306_SCREEN_WIDTH];
-  void (*i2c_write_cmd)(struct ssd1306_driver *self, uint8_t cmd);
-  void (*i2c_write_data)(struct ssd1306_driver *self, const uint8_t *data, size_t len);
+  void (*write_cmd)(struct ssd1306_driver *self, uint8_t cmd);
+  void (*write_data)(struct ssd1306_driver *self, const uint8_t *data, size_t len);
 } ssd1306_driver_t;
 
 // ssd1306_error_t SSD1306_Init(ssd1306_config_t *config);
