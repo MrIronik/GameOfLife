@@ -10,6 +10,7 @@
 
 #include "ssd1306_driver.h"
 #include "ssd1306_commands.h"
+#include "ssd1306_config.h"
 
 #include "string.h"
 
@@ -75,6 +76,16 @@ ssd1306_error_t SSD1306_BasicInit(ssd1306_driver_t *driver)
   return SSD1306_INIT_OK;
 }
 
+void SSD1306_DriverInit(ssd1306_driver_t *driver, ssd1306_config_t *config)
+{
+  // TODO: Go through whole config struct and initialize display
+}
+
+ssd1306_config_t SSD1306_GetDefaultConfig(void)
+{
+  // TODO: Fill ssd1306_config struct with default functions
+}
+
 void SSD1306_Draw_Pixel(ssd1306_driver_t *driver, uint8_t xpos, uint8_t ypos)
 {
   if (xpos >= SSD1306_SCREEN_WIDTH)
@@ -90,17 +101,6 @@ void SSD1306_Draw_Pixel(ssd1306_driver_t *driver, uint8_t xpos, uint8_t ypos)
 
 void SSD1306_Write_Display(ssd1306_driver_t *driver)
 {
-  // TODO: Make this normal lol struct with config etc
-  // uint8_t cmd[3];
-
-  // cmd[0] = (uint8_t)SSD1306_CMD_SET_PAGE_ADDRESS;
-  // cmd[1] = 0x00;  // First Page Addr
-  // cmd[2] = 0x07;  // Last Page Addr
-
-  // for (size_t i = 0; i < sizeof(cmd); i++) {
-  //   driver->write_cmd(driver, cmd[i]);
-  // }
-
   driver->write_data(driver,
                          (const uint8_t *)driver->frame_buffer,
                          sizeof(driver->frame_buffer));
@@ -108,7 +108,7 @@ void SSD1306_Write_Display(ssd1306_driver_t *driver)
 
 void SSD1306_Write_Page(ssd1306_driver_t *driver)
 {
-  // TODO: Implement this
+  // TODO: Implement this Write Page func
 }
 
 void SSD1306_Clear_Display(ssd1306_driver_t *driver)
@@ -157,7 +157,7 @@ static ssd1306_config_multiplexer_error_t SSD1306_Configure_Multiplex(ssd1306_dr
 static ssd1306_config_offset_error_t SSD1306_Configure_Offset(ssd1306_driver_t *driver, uint8_t offset)
 {
   if (offset > 254)
-    return SSD1306_OFFSET_FAIL; // Set correct max value
+    return SSD1306_OFFSET_FAIL;
 
   uint8_t cmd[2];
 

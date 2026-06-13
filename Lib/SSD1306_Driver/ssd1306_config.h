@@ -46,7 +46,7 @@ typedef struct
 typedef struct
 {
     ssd1306_conf_mem_mode_t mem_mode;
-
+    // TODO: Implement all possible configurations
 } ssd1306_config_t;
 
 #endif /* SSD1306_CONFIG_H */

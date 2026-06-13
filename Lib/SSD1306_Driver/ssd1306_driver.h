@@ -17,10 +17,10 @@
 #include "ssd1306_commands.h"
 
 /* Importent SSD1306 settings */
-#define SSD1306_SCREEN_HIGHT 64
-#define SSD1306_SCREEN_WIDTH 128
+#define SSD1306_SCREEN_HIGHT 64  // Default value, modify if needed
+#define SSD1306_SCREEN_WIDTH 128 // Default value, modify if needed
 
-#define SSD1306_I2C_ADDRESS 0x78
+#define SSD1306_I2C_ADDRESS 0x78 // Default value, modify if needed
 
 #define SSD1306_PAGE_SIZE 8
 
@@ -113,7 +113,6 @@ typedef struct ssd1306_driver
   void (*write_data)(struct ssd1306_driver *self, const uint8_t *data, size_t len);
 } ssd1306_driver_t;
 
-// ssd1306_error_t SSD1306_Init(ssd1306_config_t *config);
 ssd1306_error_t SSD1306_BasicInit(ssd1306_driver_t *driver);
 void SSD1306_Display_OnOff(ssd1306_driver_t *driver, uint8_t state);
 
